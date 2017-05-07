@@ -1,0 +1,9 @@
+aliyun:
+  ons:
+    accessKeyId: t5zToaOwDy3Vmzon
+    accessKeySecret: rX1SHIQMQOIXH2NuwMRKAwrOOgQRJn
+logging:
+  level: info
+spring:
+  profiles:
+    active: test
