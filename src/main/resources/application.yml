@@ -2,8 +2,12 @@ aliyun:
   ons:
     accessKeyId: t5zToaOwDy3Vmzon
     accessKeySecret: rX1SHIQMQOIXH2NuwMRKAwrOOgQRJn
+  rocketmq:
+    ipAddress: 192.168.230.128:9876
+    producerName: Producer
+
 logging:
   level: info
 spring:
   profiles:
-    active: test
+    active: TEST

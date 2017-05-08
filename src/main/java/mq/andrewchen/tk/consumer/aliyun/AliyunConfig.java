@@ -5,8 +5,9 @@ import mq.andrewchen.tk.consumer.BaseConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -18,20 +19,40 @@ import java.util.Properties;
 /**
  * Created by Andrew on 2017-5-6.
  */
-//@Configuration
-@Profile("test")
-@ConfigurationProperties(prefix = "aliyun",ignoreUnknownFields =true)
+@Configuration
+@Profile({"TEST", "PRE", "PROD"})
+@ConfigurationProperties(prefix = "aliyun.ons")
 public class AliyunConfig implements ApplicationContextAware{
     private Logger logger = LoggerFactory.getLogger(AliyunConfig.class);
 
     private String accessKeyId;
     private String accessKeySecret;
 
+    @Autowired
+    @Qualifier("print")
+    private BaseConsumer printMessage;
+
     private ApplicationContext applicationContext;
 
-    @Bean(name = "CID_andrewchen1", initMethod = "start", destroyMethod = "destroy")
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+
+    @Bean(name = "CID_andrewchen1", initMethod = "start", destroyMethod = "shutdown")
     public Consumer getConsumerAnddrewChen1(){
-        return creatConsumer("CID_andrewchen1");
+        return creatConsumer(printMessage);
     }
 
     @Override
@@ -39,14 +60,13 @@ public class AliyunConfig implements ApplicationContextAware{
         this.applicationContext = applicationContext;
     }
 
-    private Consumer creatConsumer(String consumerName){
+    private Consumer creatConsumer(final BaseConsumer baseConsumer){
         Properties properties = new Properties();
-        properties.setProperty(PropertyKeyConst.ConsumerId, consumerName);
+        properties.setProperty(PropertyKeyConst.ConsumerId, baseConsumer.getConsumerId());
         properties.setProperty(PropertyKeyConst.AccessKey,accessKeyId);
         properties.setProperty(PropertyKeyConst.SecretKey, accessKeySecret);
 
         Consumer consumer = ONSFactory.createConsumer(properties);
-        final BaseConsumer baseConsumer = (BaseConsumer) applicationContext.getBean("CID_andrewchen1");
         String topicName = baseConsumer.getTopicName();
         String tagName = baseConsumer.getTagName();
         consumer.subscribe(topicName,

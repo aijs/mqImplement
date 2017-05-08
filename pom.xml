@@ -29,15 +29,15 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>DEV</id>
             <properties>
-                    <properties.active>dev</properties.active>
+                    <properties.active>DEV</properties.active>
             </properties>
         </profile>
         <profile>
-            <id>test</id>
+            <id>TEST</id>
             <properties>
-                <properties.active>test</properties.active>
+                <properties.active>TEST</properties.active>
             </properties>
         </profile>
     </profiles>

@@ -15,12 +15,29 @@ import java.util.Properties;
 /**
  * Created by Andrew on 2017-5-6.
  */
-//@Configuration
-@Profile("test")
+@Configuration
+@Profile({"TEST", "PRE", "PROD" })
 @ConfigurationProperties(prefix = "aliyun.ons")
 class ProduceerConfig {
     private String accessKeyId;
     private String accessKeySecret;
+
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+
     /**
      *
      * @return
@@ -34,5 +51,4 @@ class ProduceerConfig {
         properties.setProperty(PropertyKeyConst.SecretKey, accessKeySecret);
         return  ONSFactory.createProducer(properties);
     }
-
 }
