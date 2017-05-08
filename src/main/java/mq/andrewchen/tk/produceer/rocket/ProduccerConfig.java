@@ -14,14 +14,16 @@ import org.springframework.context.annotation.Profile;
 @Profile("DEV")
 @ConfigurationProperties("alibaba.rocketmq")
 public class ProduccerConfig {
+    private String producerGroupName;
     private String ipAddress ;
     private String producerName;
 
     @Bean(name = "andrewchen_1", initMethod = "start", destroyMethod = "shutdown")
     public DefaultMQProducer mqProducer(){
-        DefaultMQProducer producer = new DefaultMQProducer(producerName);
+        DefaultMQProducer producer = new DefaultMQProducer(producerGroupName);
         producer.setNamesrvAddr(ipAddress);
         producer.setInstanceName(producerName);
+        return producer;
     }
 
     public String getIpAddress() {
@@ -38,5 +40,13 @@ public class ProduccerConfig {
 
     public void setProducerName(String producerName) {
         this.producerName = producerName;
+    }
+
+    public String getProducerGroupName() {
+        return producerGroupName;
+    }
+
+    public void setProducerGroupName(String producerGroupName) {
+        this.producerGroupName = producerGroupName;
     }
 }

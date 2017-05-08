@@ -29,8 +29,8 @@ public class AliyunConfig implements ApplicationContextAware{
     private String accessKeySecret;
 
     @Autowired
-    @Qualifier("print")
-    private BaseConsumer printMessage;
+    @Qualifier("printMessageListenerIml")
+    private BaseConsumer printMessageListenerIml;
 
     private ApplicationContext applicationContext;
 
@@ -50,9 +50,9 @@ public class AliyunConfig implements ApplicationContextAware{
         this.accessKeySecret = accessKeySecret;
     }
 
-    @Bean(name = "CID_andrewchen1", initMethod = "start", destroyMethod = "shutdown")
-    public Consumer getConsumerAnddrewChen1(){
-        return creatConsumer(printMessage);
+    @Bean(name = "printConsumer", initMethod = "start", destroyMethod = "shutdown")
+    public Consumer getPrintConsumer(){
+        return creatConsumer(printMessageListenerIml);
     }
 
     @Override

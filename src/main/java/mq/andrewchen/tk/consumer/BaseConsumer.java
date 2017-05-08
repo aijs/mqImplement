@@ -1,6 +1,9 @@
 package mq.andrewchen.tk.consumer;
 
-/**
+/** 基类消费者 包含必须的
+ * consumerid 消费者id
+ * tagName 二级编号
+ * topic 主题编号
  * Created by Andrew on 2017-5-6.
  */
 public abstract class BaseConsumer {
@@ -37,5 +40,5 @@ public abstract class BaseConsumer {
         this.consumerId = consumerId;
     }
 
-    public abstract void conume(byte[] bytes);
+    public abstract void conume(byte[] bytes)throws Exception;
 }

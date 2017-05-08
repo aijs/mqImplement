@@ -2,9 +2,11 @@ package mq.andrewchen.tk.produceer.aliyun;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
+import com.aliyun.openservices.ons.api.SendResult;
+import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import mq.andrewchen.tk.produceer.BaseProduceer;
-import org.apache.log4j.spi.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,18 +19,23 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile({"TEST","PRE","PROD"})
 public class AliyunProduceer implements BaseProduceer, ApplicationContextAware {
-    private Logger logger = org.slf4j.LoggerFactory.getLogger(AliyunProduceer.class);
+    private static Logger logger = LoggerFactory.getLogger(AliyunProduceer.class);
     private ApplicationContext applicationContext;
     @Override
     public void sendMessage(String topicName, String tagName, String key, byte[] bytes) {
+        logger.info("find bean from spring context");
         Producer producer = (Producer) applicationContext.getBean(topicName);
+        logger.info("create message the topic name is {}, the tag name is {}" +
+                "the key is {} and the bytes is {}", topicName, tagName, key, bytes);
         Message message = new Message(
                 topicName,
                 tagName,
                 key,
                 bytes
         );
-        producer.send(message);
+
+        SendResult result = producer.send(message);
+        logger.info("send the message succed the id is {}", result.getMessageId());
     }
 
     @Override

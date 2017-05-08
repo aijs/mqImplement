@@ -4,7 +4,9 @@ aliyun:
     accessKeySecret: rX1SHIQMQOIXH2NuwMRKAwrOOgQRJn
   rocketmq:
     ipAddress: 192.168.230.128:9876
-    producerName: Producer
+    producerGroupName: ProducerGroupName
+    consumerGroupName: ConsumerGroupName
+
 
 logging:
   level: info
