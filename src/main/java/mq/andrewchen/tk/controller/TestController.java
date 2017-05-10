@@ -1,5 +1,7 @@
 package mq.andrewchen.tk.controller;
 
+import mq.andrewchen.tk.config.andrewchen1.TagName;
+import mq.andrewchen.tk.config.andrewchen1.TopicName;
 import mq.andrewchen.tk.produceer.BaseProduceer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,10 @@ public class TestController {
 
     @RequestMapping(value = "/")
     public String test(){
-        baseProduceer.sendMessage("andrewchen_1", "print", "print", "hello world".getBytes());
+        baseProduceer.sendMessage(TopicName.ANDREWCHEN_1.toString(),
+                TagName.TEST.toString(),
+                TagName.TEST.toString(),
+                "hello world".getBytes());
         return "1";
     }
 }

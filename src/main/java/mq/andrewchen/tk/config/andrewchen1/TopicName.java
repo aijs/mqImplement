@@ -4,7 +4,7 @@ package mq.andrewchen.tk.config.andrewchen1;
  * Created by Andrew on 2017-5-6.
  */
 public enum TopicName {
-    ANDREWCHEN_1("ANDREWCHEN_1");
+    ANDREWCHEN_1("andrewchen_1");
 
     private final String topicName;
 

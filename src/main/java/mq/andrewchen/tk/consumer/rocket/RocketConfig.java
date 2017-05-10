@@ -35,19 +35,23 @@ public class RocketConfig {
 
 
     @Bean(name="printConsumer", initMethod = "start", destroyMethod = "shutdown")
-    public DefaultMQPushConsumer getPrintConsumer(final BaseConsumer printMessage) throws MQClientException {
+    public DefaultMQPushConsumer getPrintConsumer(final BaseConsumer printMessageListenerIml) throws MQClientException {
+        return createConsumer(printMessageListenerIml);
+    }
+
+    private DefaultMQPushConsumer createConsumer(final BaseConsumer baseConsumer)throws MQClientException{
         DefaultMQPushConsumer defaultMQPushConsumer = new DefaultMQPushConsumer(consumerGroupName);
         defaultMQPushConsumer.setNamesrvAddr(ipAddress);
         defaultMQPushConsumer.setInstanceName(printMessageListenerIml.getConsumerId());
         defaultMQPushConsumer.subscribe(printMessageListenerIml.getTopicName(),
-                                        printMessageListenerIml.getTopicName());
+                printMessageListenerIml.getTagName());
         defaultMQPushConsumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list,
                                                             ConsumeConcurrentlyContext consumeConcurrentlyContext) {
                 for(MessageExt messageExt: list){
                     try {
-                        printMessage.conume(messageExt.getBody());
+                        baseConsumer.conume(messageExt.getBody());
                     }catch (Exception e){
                         logger.error("fetal error occurred, {}", e.getMessage());
                         return ConsumeConcurrentlyStatus.RECONSUME_LATER;
@@ -58,7 +62,6 @@ public class RocketConfig {
         });
         return defaultMQPushConsumer;
     }
-
     public String getIpAddress() {
         return ipAddress;
     }

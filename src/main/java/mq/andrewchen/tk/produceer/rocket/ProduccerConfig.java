@@ -1,6 +1,7 @@
 package mq.andrewchen.tk.produceer.rocket;
 
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.DefaultMQProducer;
+import mq.andrewchen.tk.config.andrewchen1.ConsumerName;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("DEV")
-@ConfigurationProperties("alibaba.rocketmq")
+@ConfigurationProperties("aliyun.rocketmq")
 public class ProduccerConfig {
     private String producerGroupName;
     private String ipAddress ;
@@ -22,7 +23,7 @@ public class ProduccerConfig {
     public DefaultMQProducer mqProducer(){
         DefaultMQProducer producer = new DefaultMQProducer(producerGroupName);
         producer.setNamesrvAddr(ipAddress);
-        producer.setInstanceName(producerName);
+        producer.setInstanceName(ConsumerName.CID_andrewchen1.toString());
         return producer;
     }
 
