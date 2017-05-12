@@ -1,12 +1,9 @@
-package mq.andrewchen.tk.produceer.rocket;
+package mq.andrewchen.tk.producer.rocket;
 
-import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.exception.MQBrokerException;
-import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.exception.MQClientException;
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.SendResult;
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.common.message.Message;
-import com.aliyun.openservices.shade.com.alibaba.rocketmq.remoting.exception.RemotingException;
-import mq.andrewchen.tk.produceer.BaseProduceer;
+import mq.andrewchen.tk.producer.ProducerExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -20,8 +17,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Profile("DEV")
-public class RocketProduceer implements BaseProduceer, ApplicationContextAware {
-    private static Logger logger = LoggerFactory.getLogger(RocketProduceer.class);
+public class RocketProducer implements ProducerExecutor, ApplicationContextAware {
+    private static Logger logger = LoggerFactory.getLogger(RocketProducer.class);
     private ApplicationContext applicationContext;
 
     @Override

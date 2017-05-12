@@ -1,4 +1,4 @@
-package mq.andrewchen.tk.produceer.rocket;
+package mq.andrewchen.tk.producer.rocket;
 
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import mq.andrewchen.tk.config.andrewchen1.ConsumerName;

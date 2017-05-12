@@ -1,10 +1,9 @@
-package mq.andrewchen.tk.produceer.aliyun;
+package mq.andrewchen.tk.producer.aliyun;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.SendResult;
-import com.aliyun.openservices.shade.com.alibaba.rocketmq.client.producer.DefaultMQProducer;
-import mq.andrewchen.tk.produceer.BaseProduceer;
+import mq.andrewchen.tk.producer.ProducerExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,8 +17,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Profile({"TEST","PRE","PROD"})
-public class AliyunProduceer implements BaseProduceer, ApplicationContextAware {
-    private static Logger logger = LoggerFactory.getLogger(AliyunProduceer.class);
+public class AliyunProducer implements ProducerExecutor, ApplicationContextAware {
+    private static Logger logger = LoggerFactory.getLogger(AliyunProducer.class);
     private ApplicationContext applicationContext;
     @Override
     public void sendMessage(String topicName, String tagName, String key, byte[] bytes) {

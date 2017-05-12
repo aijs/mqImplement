@@ -1,4 +1,4 @@
-package mq.andrewchen.tk.produceer.aliyun;
+package mq.andrewchen.tk.producer.aliyun;
 
 import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.Producer;
